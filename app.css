@@ -12,11 +12,11 @@ body {
 }
 
 .projects {
-  border: 1px solid #ff0062;
+  border: 1px solid #007388;
 }
 
 .projects header {
-  background: #a1307c;
+  background: #60d4ea;
   height: 3.5rem;
   display: flex;
   justify-content: center;

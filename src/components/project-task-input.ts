@@ -1,6 +1,7 @@
 import { autobind } from '../decorators/autobind.js';
-import { Validatable } from '../interfaces/Validatable.js';
-import { validate } from '../helpers/validate.js';
+import { Validatable } from '../interfaces/validatable.js';
+import { validate } from '../helpers/validation.js';
+import { projectState } from '../state/task-state.js';
 
 export class ProjectInput {
   templateElement: HTMLDivElement;
@@ -60,7 +61,7 @@ export class ProjectInput {
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
       const [title, desc] = userInput;
-      console.log(title, desc);
+      projectState.addProject(title, desc);
       this.clearInputs();
     }
   }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>ProjectManager</title>
+    <title>Project Status App</title>
     <link rel="stylesheet" href="app.css" />
     <script type="module" src="dist/app.js" defer></script>
   </head>
@@ -12,19 +12,18 @@
  
     <template id="single-project">     
           <li draggable="true">
-            <div class="card text-white bg-secondary mb-3">
+            <div class="card text-white bg-info mb-3">
               <div class="card-header"><h4 class="card-title"></h4></div>            
             <div class="card-body">
               <p class="card-text"></p>
-             <small ></small>
-            
+             <small ></small>            
           </div>
         </div>
           </li>
         
     </template>
     <template id="project-list">
-      <div class="col-sm-2">
+      <div class="col-sm-3">
       <section class="projects">
         <header>
           <h4></h4>
@@ -34,6 +33,7 @@
       </template></div>
     </template>
     <div id="app" class="container">
+      <div class="p- mb-1 bg-info text-dark" style="text-align: center; font-weight: 600; margin-top: 20px;">Project Status App</div>
       <div class="row">
         <div id="project-input" class="col">          
           <form>
@@ -57,8 +57,9 @@
           </form>        
         </div>
       </div>
-      <div id="dataRow" class="row">
-
+      <div class="p-6 mb-6 bg- text-dark">Drag and drop to change the status</div>
+      <div id="dataRow" class="row">       
+       
       </div>
     </div>
   </body>
