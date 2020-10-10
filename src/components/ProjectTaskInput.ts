@@ -1,23 +1,20 @@
 import { autobind } from '../decorators/autobind.js';
+import { Validatable } from '../interfaces/Validatable.js';
+import { validate } from '../helpers/validate.js';
+
 export class ProjectInput {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
+  templateElement: HTMLDivElement;
   element: HTMLFormElement;
   technologyInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
-  peopleInputElement: HTMLInputElement;
 
   constructor() {
     this.templateElement = document.getElementById(
       'project-input'
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById('app')! as HTMLDivElement;
+    )! as HTMLDivElement;
 
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    this.element = importedNode.firstElementChild as HTMLFormElement;
+    this.element = document.querySelector('form')! as HTMLFormElement;
+
     this.element.id = 'task-input';
 
     this.technologyInputElement = this.element.querySelector(
@@ -26,26 +23,35 @@ export class ProjectInput {
     this.descriptionInputElement = this.element.querySelector(
       '#description'
     ) as HTMLInputElement;
-    this.peopleInputElement = this.element.querySelector(
-      '#people'
-    ) as HTMLInputElement;
 
     this.configure();
-    this.attach();
   }
 
-  private gatherUserInput(): [string, string, number] | void {
+  private gatherUserInput(): [string, string] | void {
     const enteredTitle = this.technologyInputElement.value;
     const enteredDescription = this.descriptionInputElement.value;
-    const enteredPeople = this.peopleInputElement.value;
 
-    return [enteredTitle, enteredDescription, +enteredPeople];
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true,
+    };
+    const descriptionValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 5,
+    };
+
+    if (!validate(titleValidatable) || !validate(descriptionValidatable)) {
+      alert('Invalid input, please try again!');
+      return;
+    } else {
+      return [enteredTitle, enteredDescription];
+    }
   }
 
   private clearInputs() {
     this.technologyInputElement.value = '';
     this.descriptionInputElement.value = '';
-    this.peopleInputElement.value = '';
   }
 
   @autobind
@@ -53,17 +59,13 @@ export class ProjectInput {
     event.preventDefault();
     const userInput = this.gatherUserInput();
     if (Array.isArray(userInput)) {
-      const [title, desc, people] = userInput;
-      console.log(title, desc, people);
+      const [title, desc] = userInput;
+      console.log(title, desc);
       this.clearInputs();
     }
   }
 
   private configure() {
     this.element.addEventListener('submit', this.submitHandler);
-  }
-
-  private attach() {
-    this.hostElement.insertAdjacentElement('afterbegin', this.element);
   }
 }
