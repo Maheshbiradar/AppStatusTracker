@@ -55,9 +55,8 @@ h4 {
   background: #d6e1ff;
 }
 
-#user-input {
+#task-input {
   margin: 1rem;
   background: #f7f7f7;
   width: 200px;
-  height: 200px;
 }
