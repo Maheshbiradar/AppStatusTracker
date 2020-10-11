@@ -10,5 +10,5 @@ App to demostrate the capabilities of typescript!
  
  How to Run?
   1. Type npm install
-  2. run tsc in another window
-  3. Browse through http://localhost:3000/
+  2. run npm start 
+  3. Browse through http://localhost:8080/
