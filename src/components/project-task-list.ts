@@ -4,8 +4,12 @@ import { projectState } from '../state/task-state.js';
 import { ProjectItem } from './project-task-item.js';
 import { status } from '../types/status.js';
 import Component from './base-componet.js';
+import { DragTarget } from '../models/draggable.js';
+import { autobind } from '../decorators/autobind.js';
 
-export class ProjectTaskList extends Component<HTMLDivElement, HTMLElement> {
+export class ProjectTaskList
+  extends Component<HTMLDivElement, HTMLElement>
+  implements DragTarget {
   assignedProjects: ProjectTask[];
 
   constructor(private type: status) {
@@ -32,7 +36,42 @@ export class ProjectTaskList extends Component<HTMLDivElement, HTMLElement> {
     this.renderContent();
   }
 
-  configure(): void {}
+  configure(): void {
+    this.element.addEventListener('dragover', this.dragOver);
+    this.element.addEventListener('dragleave', this.dragLeave);
+    this.element.addEventListener('drop', this.drop);
+  }
+
+  @autobind
+  dragOver(event: DragEvent) {
+    if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+      event.preventDefault();
+      const listEl = this.element.querySelector('ul')!;
+      listEl.classList.add('droppable');
+    }
+  }
+
+  @autobind
+  drop(event: DragEvent) {
+    const prjId = event.dataTransfer!.getData('text/plain');
+    let finalType: ProjectStatus;
+    if (this.type === 'active') {
+      finalType = ProjectStatus.Active;
+    } else if (this.type === 'in-progress') {
+      finalType = ProjectStatus.InProgress;
+    } else if (this.type === 'in-validation') {
+      finalType = ProjectStatus.Validation;
+    } else {
+      finalType = ProjectStatus.Complete;
+    }
+    projectState.moveProject(prjId, finalType);
+  }
+
+  @autobind
+  dragLeave(_: DragEvent) {
+    const listEl = this.element.querySelector('ul')!;
+    listEl.classList.remove('droppable');
+  }
 
   private renderProjects() {
     const listEl = document.getElementById(
