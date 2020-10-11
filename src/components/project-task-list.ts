@@ -3,27 +3,14 @@ import { ProjectStatus } from '../models/status-enum.js';
 import { projectState } from '../state/task-state.js';
 import { ProjectItem } from './project-task-item.js';
 import { status } from '../types/status.js';
+import Component from './base-componet.js';
 
-export class ProjectTaskList {
-  templateElement: HTMLTemplateElement;
-  hostElement: HTMLDivElement;
-  element: HTMLElement;
+export class ProjectTaskList extends Component<HTMLDivElement, HTMLElement> {
   assignedProjects: ProjectTask[];
 
   constructor(private type: status) {
-    this.templateElement = document.getElementById(
-      'project-list'
-    )! as HTMLTemplateElement;
-    this.hostElement = document.getElementById('dataRow')! as HTMLDivElement;
+    super('project-list', 'dataRow', false, `${type}-projects`);
     this.assignedProjects = [];
-
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true
-    );
-    this.element = importedNode.firstElementChild as HTMLElement;
-    this.element.id = `${this.type}-projects`;
-
     projectState.addListener((projects: ProjectTask[]) => {
       const relevantProjects = projects.filter((prj) => {
         if (this.type === 'active') {
@@ -41,9 +28,11 @@ export class ProjectTaskList {
       this.renderProjects();
     });
 
-    this.attach();
+    this.configure();
     this.renderContent();
   }
+
+  configure(): void {}
 
   private renderProjects() {
     const listEl = document.getElementById(
@@ -55,14 +44,10 @@ export class ProjectTaskList {
     }
   }
 
-  private renderContent() {
+  renderContent() {
     const listId = `${this.type}-projects-list`;
     this.element.querySelector('ul')!.id = listId;
     this.element.querySelector('h4')!.textContent =
       this.type.toUpperCase() + ' TASKS';
-  }
-
-  private attach() {
-    this.hostElement.insertAdjacentElement('beforeend', this.element);
   }
 }
