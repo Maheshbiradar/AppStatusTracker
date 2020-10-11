@@ -1,6 +1,6 @@
 // Code goes here!
-import { ProjectInput } from './components/project-task-input.js';
-import { ProjectTaskList } from './components/project-task-list.js';
+import { ProjectInput } from './components/project-task-input';
+import { ProjectTaskList } from './components/project-task-list';
 
 new ProjectInput();
 new ProjectTaskList('active');

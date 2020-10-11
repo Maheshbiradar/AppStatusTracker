@@ -1,11 +1,11 @@
-import { ProjectTask } from '../models/project-task.js';
-import { ProjectStatus } from '../models/status-enum.js';
-import { projectState } from '../state/task-state.js';
-import { ProjectItem } from './project-task-item.js';
-import { status } from '../types/status.js';
-import Component from './base-componet.js';
-import { DragTarget } from '../models/draggable.js';
-import { autobind } from '../decorators/autobind.js';
+import { ProjectTask } from '../models/project-task';
+import { ProjectStatus } from '../models/status-enum';
+import { projectState } from '../state/task-state';
+import { ProjectItem } from './project-task-item';
+import { status } from '../types/status';
+import Component from './base-componet';
+import { DragTarget } from '../models/draggable';
+import { autobind } from '../decorators/autobind';
 
 export class ProjectTaskList
   extends Component<HTMLDivElement, HTMLElement>

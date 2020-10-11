@@ -1,7 +1,7 @@
-import { autobind } from '../decorators/autobind.js';
-import { Validatable } from '../interfaces/validatable.js';
-import { validate } from '../helpers/validation.js';
-import { projectState } from '../state/task-state.js';
+import { autobind } from '../decorators/autobind';
+import { Validatable } from '../interfaces/validatable';
+import { validate } from '../helpers/validation';
+import { projectState } from '../state/task-state';
 
 export class ProjectInput {
   templateElement: HTMLDivElement;

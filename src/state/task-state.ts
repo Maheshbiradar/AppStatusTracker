@@ -1,6 +1,6 @@
-import { Listener } from '../types/listeners.js';
-import { ProjectTask } from '../models/project-task.js';
-import { ProjectStatus } from '../models/status-enum.js';
+import { Listener } from '../types/listeners';
+import { ProjectTask } from '../models/project-task';
+import { ProjectStatus } from '../models/status-enum';
 
 class ProjectState {
   private listeners: Listener[] = [];
